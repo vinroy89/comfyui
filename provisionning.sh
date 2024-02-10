@@ -105,7 +105,7 @@ function provisioning_start() {
         "${WORKSPACE}/storage/stable_diffusion/models/esrgan" \
         "${ESRGAN_MODELS[@]}"
     provisioning_get_models \
-        "${WORKSPACE}/storage/stable_diffusion/models/ipadapter" \
+        "${WORKSPACE}/ComfyUI/models/ipadapter" \
         "${IPADAPTER_MODELS[@]}"
     provisioning_get_models \
         "$/opt/ComfyUI/custom_nodes/ComfyUI-InstantID/models/antelopev2" \
@@ -114,7 +114,7 @@ function provisioning_start() {
     provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/config.json" "$/opt/ComfyUI/custom_nodes/ComfyUI-InstantID/checkpoints/controlnet/"
     provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/diffusion_pytorch_model.safetensors" "$/opt/ComfyUI/custom_nodes/ComfyUI-InstantID/checkpoints/controlnet/"
     provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ip-adapter.bin" "$/opt/ComfyUI/custom_nodes/ComfyUI-InstantID/checkpoints/"
-	provisioning_download "https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors" "${WORKSPACE}/storage/stable_diffusion/models/clip_vision"
+	provisioning_download "https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors" "${WORKSPACE}/ComfyUI/models/clip_vision"
     provisioning_print_end
 }
 
