@@ -4,6 +4,8 @@
 
 # https://raw.githubusercontent.com/ai-dock/comfyui/main/config/provisioning/default.sh
 
+apt update
+apt install cuda -y
 
 NODES=(
     "https://github.com/ltdrdata/ComfyUI-Manager"
@@ -15,6 +17,7 @@ NODES=(
     "https://github.com/CYBERLOOM-INC/ComfyUI-nodes-hnmr"
     "https://github.com/unanan/ComfyUI-clip-interrogator"
     "https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID"
+    "https://github.com/shiimizu/ComfyUI-PhotoMaker-Plus"
 )
 
 CHECKPOINT_MODELS=(
