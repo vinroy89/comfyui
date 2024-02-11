@@ -5,7 +5,7 @@
 # https://raw.githubusercontent.com/ai-dock/comfyui/main/config/provisioning/default.sh
 
 apt update
-apt install cuda -y
+apt install cuda-toolkit -y
 
 NODES=(
     "https://github.com/ltdrdata/ComfyUI-Manager"
