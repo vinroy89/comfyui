@@ -26,7 +26,9 @@ CHECKPOINT_MODELS=(
 
 LORA_MODELS=(
     #"https://civitai.com/api/download/models/16576"
-	"https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_offset_example-lora_1.0.safetensors"
+    "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_offset_example-lora_1.0.safetensors"
+    "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid_sdxl_lora.safetensors"
+    "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid-plusv2_sdxl_lora.safetensors"
 )
 
 VAE_MODELS=(
@@ -69,8 +71,6 @@ IPADAPTER_MODELS=(
     "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid_sdxl.bin"
     "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid-plusv2_sdxl.bin"
     "https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/ip-adapter-plus-face_sdxl_vit-h.safetensors"
-    "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid_sdxl_lora.safetensors"
-    "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid-plusv2_sdxl_lora.safetensors"
 )
 
 ANTELOPE_MODELS=(
@@ -108,14 +108,14 @@ function provisioning_start() {
         "${WORKSPACE}/ComfyUI/models/ipadapter" \
         "${IPADAPTER_MODELS[@]}"
     provisioning_get_models \
-        "$/opt/ComfyUI/custom_nodes/ComfyUI-InstantID/models/antelopev2" \
+        "${WORKSPACE}/ComfyUI/custom_nodes/ComfyUI-InstantID/models/antelopev2" \
         "${ANTELOPE_MODELS[@]}"
 		
-    provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/config.json" "$/opt/ComfyUI/custom_nodes/ComfyUI-InstantID/checkpoints/controlnet/"
-    provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/diffusion_pytorch_model.safetensors" "$/opt/ComfyUI/custom_nodes/ComfyUI-InstantID/checkpoints/controlnet/"
-    provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ip-adapter.bin" "$/opt/ComfyUI/custom_nodes/ComfyUI-InstantID/checkpoints/"
-	provisioning_download "https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors" "${WORKSPACE}/ComfyUI/models/clip_vision"
-    provisioning_print_end
+     provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/config.json" "${WORKSPACE}/ComfyUI/models/checkpoints/controlnet/"
+     provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/diffusion_pytorch_model.safetensors" "${WORKSPACE}/ComfyUI/models/checkpoints/controlnet/"
+     provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ip-adapter.bin" "${WORKSPACE}/ComfyUI/models/checkpoints/"
+     provisioning_download "https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors" "${WORKSPACE}/ComfyUI/models/clip_vision"
+     provisioning_print_end
 }
 
 function provisioning_get_nodes() {
