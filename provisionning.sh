@@ -17,15 +17,10 @@ fi
 # Check if CUDA is already installed by looking for nvcc
 if ! type nvcc > /dev/null 2>&1; then
   echo "CUDA not found. Installing CUDA..."
-  # Commands to update your system and add NVIDIA package repositories
-  # Note: These commands might change based on your specific Ubuntu version and the CUDA version you want to install
   sudo apt update && sudo apt upgrade -y
-  sudo apt install -y software-properties-common
-  sudo add-apt-repository ppa:graphics-drivers/ppa
-  sudo apt update
   # Install CUDA
   # Note: You may need to adjust the package name for different CUDA versions
-  sudo apt install -y cuda
+  sudo apt install -y cuda-toolkit
 else
   echo "CUDA is already installed."
 fi
