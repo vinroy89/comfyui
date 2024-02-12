@@ -41,13 +41,12 @@ NODES=(
     "https://github.com/unanan/ComfyUI-clip-interrogator"
     "https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID"
     "https://github.com/shiimizu/ComfyUI-PhotoMaker-Plus"
+    "https://github.com/cubiq/ComfyUI_InstantID"
 )
 
 CHECKPOINT_MODELS=(
-    "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors"
     "https://huggingface.co/stabilityai/stable-diffusion-xl-refiner-1.0/resolve/main/sd_xl_refiner_1.0.safetensors"
     "https://huggingface.co/frankjoshua/juggernautXL_v8Rundiffusion/resolve/main/juggernautXL_v8Rundiffusion.safetensors"
-    "https://huggingface.co/SG161222/RealVisXL_V3.0/resolve/main/RealVisXL_V3.0.safetensors"
 )
 
 LORA_MODELS=(
