@@ -110,15 +110,20 @@ function provisioning_start() {
     provisioning_get_models \
         "${WORKSPACE}/ComfyUI/custom_nodes/ComfyUI-InstantID/models/antelopev2" \
         "${ANTELOPE_MODELS[@]}"
-		
+	
+     printf "Downloading InstantID models ...\n" "${repo}"
      provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/config.json" "${WORKSPACE}/ComfyUI/models/checkpoints/controlnet/"
      provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/diffusion_pytorch_model.safetensors" "${WORKSPACE}/ComfyUI/models/checkpoints/controlnet/"
      provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ip-adapter.bin" "${WORKSPACE}/ComfyUI/models/checkpoints/"
+     
+     printf "Downloading clip models ...\n" "${repo}"
      provisioning_download "https://huggingface.co/camenduru/SUPIR/resolve/main/CLIP-ViT-bigG-14-laion2B-39B-b160k.tar" "${WORKSPACE}/ComfyUI/models/clip"
      provisioning_download "https://huggingface.co/camenduru/SUPIR/resolve/main/clip-vit-large-patch14.tar" "${WORKSPACE}/ComfyUI/models/clip"
+     provisioning_download "https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors" "${WORKSPACE}/ComfyUI/models/clip_vision"
+
+     printf "Downloading LeoSams' Helloworld CLIP models ...\n" "${repo}"
      provisioning_download "https://huggingface.co/misri/leosamsHelloworldXL_helloworldXL70/resolve/main/text_encoder/model.fp16.safetensors" "${WORKSPACE}/ComfyUI/models/clip" "leosamsHelloworldXL_helloworldXL70-CLIP-L_fp16.safetensors"
      provisioning_download "https://huggingface.co/misri/leosamsHelloworldXL_helloworldXL70/resolve/main/text_encoder_2/model.fp16.safetensors" "${WORKSPACE}/ComfyUI/models/clip" "leosamsHelloworldXL_helloworldXL70-CLIP-G_fp16.safetensors"
-     provisioning_download "https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors" "${WORKSPACE}/ComfyUI/models/clip_vision"
      provisioning_print_end
 }
 
