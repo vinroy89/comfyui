@@ -28,20 +28,23 @@ fi
 NODES=(
     "https://github.com/ltdrdata/ComfyUI-Manager"
     "https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes"
+    "https://github.com/11cafe/comfyui-workspace-manager"
+    "https://github.com/kijai/ComfyUI-SUPIR"
+    "https://github.com/ManglerFTW/ComfyI2I"
     "https://github.com/cubiq/ComfyUI_IPAdapter_plus"
+    "https://github.com/cubiq/ComfyUI_InstantID"
     "https://github.com/Fannovel16/comfyui_controlnet_aux"
     "https://github.com/ltdrdata/ComfyUI-Inspire-Pack"
     "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
     "https://github.com/CYBERLOOM-INC/ComfyUI-nodes-hnmr"
     "https://github.com/unanan/ComfyUI-clip-interrogator"
-    "https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID"
-    "https://github.com/shiimizu/ComfyUI-PhotoMaker-Plus"
-    "https://github.com/cubiq/ComfyUI_InstantID"
 )
 
 CHECKPOINT_MODELS=(
-    "https://huggingface.co/stabilityai/stable-diffusion-xl-refiner-1.0/resolve/main/sd_xl_refiner_1.0.safetensors"
-    "https://huggingface.co/frankjoshua/juggernautXL_v8Rundiffusion/resolve/main/juggernautXL_v8Rundiffusion.safetensors"
+    "https://huggingface.co/misri/leosamsHelloworldXL_helloworldXL70/resolve/main/leosamsHelloworldXL_helloworldXL70.safetensors"
+    "https://huggingface.co/camenduru/SUPIR/resolve/main/SUPIR-v0F.ckpt"
+    "https://huggingface.co/camenduru/SUPIR/resolve/main/SUPIR-v0Q.ckpt"
+    
 )
 
 LORA_MODELS=(
@@ -52,7 +55,7 @@ LORA_MODELS=(
 )
 
 VAE_MODELS=(
-    "https://huggingface.co/stabilityai/sdxl-vae/resolve/main/sdxl_vae.safetensors"
+    "https://huggingface.co/madebyollin/sdxl-vae-fp16-fix/resolve/main/sdxl.vae.safetensors"
 )
 
 ESRGAN_MODELS=(
@@ -63,34 +66,11 @@ ESRGAN_MODELS=(
 )
 
 CONTROLNET_MODELS=(
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sai_xl_recolor_128lora.safetensors"
-    "https://huggingface.co/CVL-Heidelberg/ControlNet-XS/resolve/main/sdxl_encD_canny_20m.safetensors"
-    "https://huggingface.co/CVL-Heidelberg/ControlNet-XS/resolve/main/sdxl_encD_canny_48m.safetensors"
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/ioclab_sd15_recolor.safetensors"
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_blur.safetensors"
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_blur_anime.safetensors"
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_blur_anime_beta.safetensors"
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_canny.safetensors"
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_canny_anime.safetensors"
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_depth.safetensors"
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_depth_anime.safetensors"
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_openpose_anime.safetensors"
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_openpose_anime_v2.safetensors"
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/kohya_controllllite_xl_scribble_anime.safetensors"
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sai_xl_canny_128lora.safetensors"
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sai_xl_canny_256lora.safetensors"
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sai_xl_depth_128lora.safetensors"
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sai_xl_depth_256lora.safetensors"
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sai_xl_recolor_256lora.safetensors"
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sai_xl_sketch_128lora.safetensors"
-    "https://huggingface.co/lllyasviel/sd_control_collection/resolve/main/sai_xl_sketch_256lora.safetensors"
 )
 
 IPADAPTER_MODELS=(
-    "https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors"
     "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid_sdxl.bin"
     "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid-plusv2_sdxl.bin"
-    "https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/ip-adapter-plus-face_sdxl_vit-h.safetensors"
 )
 
 ANTELOPE_MODELS=(
@@ -134,6 +114,8 @@ function provisioning_start() {
      provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/config.json" "${WORKSPACE}/ComfyUI/models/checkpoints/controlnet/"
      provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/diffusion_pytorch_model.safetensors" "${WORKSPACE}/ComfyUI/models/checkpoints/controlnet/"
      provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ip-adapter.bin" "${WORKSPACE}/ComfyUI/models/checkpoints/"
+     provisioning_download "https://huggingface.co/camenduru/SUPIR/resolve/main/CLIP-ViT-bigG-14-laion2B-39B-b160k.tar" "${WORKSPACE}/ComfyUI/models/clip"
+     provisioning_download "https://huggingface.co/camenduru/SUPIR/resolve/main/clip-vit-large-patch14.tar" "${WORKSPACE}/ComfyUI/models/clip"
      provisioning_download "https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors" "${WORKSPACE}/ComfyUI/models/clip_vision"
      provisioning_print_end
 }
