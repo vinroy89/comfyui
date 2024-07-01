@@ -116,6 +116,8 @@ function provisioning_start() {
      provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ip-adapter.bin" "${WORKSPACE}/ComfyUI/models/checkpoints/"
      provisioning_download "https://huggingface.co/camenduru/SUPIR/resolve/main/CLIP-ViT-bigG-14-laion2B-39B-b160k.tar" "${WORKSPACE}/ComfyUI/models/clip"
      provisioning_download "https://huggingface.co/camenduru/SUPIR/resolve/main/clip-vit-large-patch14.tar" "${WORKSPACE}/ComfyUI/models/clip"
+     provisioning_download "https://huggingface.co/misri/leosamsHelloworldXL_helloworldXL70/resolve/main/text_encoder/model.fp16.safetensors" "${WORKSPACE}/ComfyUI/models/clip" "leosamsHelloworldXL_helloworldXL70-CLIP-L_fp16.safetensors"
+     provisioning_download "https://huggingface.co/misri/leosamsHelloworldXL_helloworldXL70/resolve/main/text_encoder_2/model.fp16.safetensors" "${WORKSPACE}/ComfyUI/models/clip" "leosamsHelloworldXL_helloworldXL70-CLIP-G_fp16.safetensors"
      provisioning_download "https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors" "${WORKSPACE}/ComfyUI/models/clip_vision"
      provisioning_print_end
 }
@@ -175,8 +177,19 @@ function provisioning_print_end() {
 }
 
 # Download from $1 URL to $2 file path
+# Download from $1 URL to $2 directory, optionally use $3 as the filename
 function provisioning_download() {
-    wget -qnc --content-disposition --show-progress -e dotbytes="${3:-4M}" -P "$2" "$1"
+    url=$1
+    directory=$2
+    filename=$3
+
+    mkdir -p "$directory"
+    
+    if [[ -z "$filename" ]]; then
+        wget -qnc --content-disposition --show-progress -e dotbytes="${4:-4M}" -P "$directory" "$url"
+    else
+        wget -qnc --show-progress -e dotbytes="${4:-4M}" -O "$directory/$filename" "$url"
+    fi
 }
 
 provisioning_start
