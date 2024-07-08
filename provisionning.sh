@@ -33,6 +33,7 @@ NODES=(
     "https://github.com/WASasquatch/was-node-suite-comfyui"
     "https://github.com/crystian/ComfyUI-Crystools"
     "https://github.com/BadCafeCode/masquerade-nodes-comfyui"
+    "https://github.com/laksjdjf/cgem156-ComfyUI/tree/main/scripts/attention_couple"
 )
 
 CHECKPOINT_MODELS=(
