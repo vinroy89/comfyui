@@ -130,23 +130,43 @@ function provisioning_get_nodes() {
                 printf "Updating node: %s...\n" "${repo}"
                 ( cd "$path" && git pull )
                 if [[ -e $requirements ]]; then
+                    printf "Installing requirements for %s...\n" "${dir}"
                     micromamba -n comfyui run ${PIP_INSTALL} -r "$requirements"
+                    if [[ $? -ne 0 ]]; then
+                        printf "Error installing requirements for %s\n" "${dir}" >&2
+                    fi
                 fi
             fi
         else
             printf "Downloading node: %s...\n" "${repo}"
             git clone "${repo}" "${path}" --recursive
+            if [[ $? -ne 0 ]]; then
+                printf "Error cloning repository %s\n" "${repo}" >&2
+            fi
             if [[ -e $requirements ]]; then
+                printf "Installing requirements for %s...\n" "${dir}"
                 micromamba -n comfyui run ${PIP_INSTALL} -r "${requirements}"
+                if [[ $? -ne 0 ]]; then
+                    printf "Error installing requirements for %s\n" "${dir}" >&2
+                fi
             fi
         fi
     done
 }
 
 function provisioning_install_python_packages() {
+    printf "Checking if there are Python packages to install...\n"
     if [ ${#PYTHON_PACKAGES[@]} -gt 0 ]; then
+        printf "Python packages to be installed: ${PYTHON_PACKAGES[*]}\n"
         printf "Downloading python packages ${PYTHON_PACKAGES[*]}\n"
         micromamba -n comfyui run ${PIP_INSTALL} ${PYTHON_PACKAGES[*]}
+        if [[ $? -ne 0 ]]; then
+            printf "Error installing python packages: ${PYTHON_PACKAGES[*]}\n" >&2
+        else
+            printf "Successfully installed python packages: ${PYTHON_PACKAGES[*]}\n"
+        fi
+    else
+        printf "No Python packages to install.\n"
     fi
 }
 
