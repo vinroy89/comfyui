@@ -38,6 +38,10 @@ NODES=(
     "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
     "https://github.com/CYBERLOOM-INC/ComfyUI-nodes-hnmr"
     "https://github.com/unanan/ComfyUI-clip-interrogator"
+    "https://github.com/kijai/ComfyUI-SUPIR"
+    "https://github.com/WASasquatch/was-node-suite-comfyui"
+    "https://github.com/crystian/ComfyUI-Crystools"
+    "https://github.com/BadCafeCode/masquerade-nodes-comfyui"
 )
 
 CHECKPOINT_MODELS=(
@@ -146,6 +150,7 @@ function provisioning_get_nodes() {
             fi
         fi
     done
+    micromamba -m pip install evalidate spandrel ultralytics numba deepdiff Ninja
 }
 
 function provisioning_get_models() {
