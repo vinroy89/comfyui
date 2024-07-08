@@ -1,29 +1,20 @@
-#!/bin/false
+#!/bin/bash
 
 # This file will be sourced in init.sh
 
 # https://raw.githubusercontent.com/ai-dock/comfyui/main/config/provisioning/default.sh
 
-# Check if the cuda-toolkit package is already installed
-if ! dpkg -l | grep -qw cuda-toolkit; then
-  echo "CUDA Toolkit not found. Installing CUDA Toolkit..."
-  apt update
-  apt install cuda-toolkit -y
-else
-  echo "CUDA Toolkit is already installed."
-fi
+# Packages are installed after nodes so we can fix them...
 
-
-# Check if CUDA is already installed by looking for nvcc
-if ! type nvcc > /dev/null 2>&1; then
-  echo "CUDA not found. Installing CUDA..."
-  sudo apt update && sudo apt upgrade -y
-  # Install CUDA
-  # Note: You may need to adjust the package name for different CUDA versions
-  sudo apt install -y cuda-toolkit
-else
-  echo "CUDA is already installed."
-fi
+PYTHON_PACKAGES=(
+    #"opencv-python==4.7.0.72"
+    "evalidate"
+    "spandrel"
+    "ultralytics" 
+    "numba" 
+    "deepdiff" 
+    "Ninja"
+)
 
 NODES=(
     "https://github.com/ltdrdata/ComfyUI-Manager"
@@ -48,11 +39,9 @@ CHECKPOINT_MODELS=(
     "https://huggingface.co/misri/leosamsHelloworldXL_helloworldXL70/resolve/main/leosamsHelloworldXL_helloworldXL70.safetensors"
     "https://huggingface.co/camenduru/SUPIR/resolve/main/SUPIR-v0F.ckpt"
     "https://huggingface.co/camenduru/SUPIR/resolve/main/SUPIR-v0Q.ckpt"
-    
 )
 
 LORA_MODELS=(
-    #"https://civitai.com/api/download/models/16576"
     "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_offset_example-lora_1.0.safetensors"
     "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid_sdxl_lora.safetensors"
     "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid-plusv2_sdxl_lora.safetensors"
@@ -69,8 +58,7 @@ ESRGAN_MODELS=(
     "https://huggingface.co/gemasai/4x_NMKD-Siax_200k/resolve/main/4x_NMKD-Siax_200k.pth"
 )
 
-CONTROLNET_MODELS=(
-)
+CONTROLNET_MODELS=()
 
 IPADAPTER_MODELS=(
     "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid_sdxl.bin"
@@ -93,6 +81,7 @@ function provisioning_start() {
     DISK_GB_ALLOCATED=$(($DISK_GB_AVAILABLE + $DISK_GB_USED))
     provisioning_print_header
     provisioning_get_nodes
+    provisioning_install_python_packages
     provisioning_get_models \
         "${WORKSPACE}/storage/stable_diffusion/models/ckpt" \
         "${CHECKPOINT_MODELS[@]}"
@@ -114,19 +103,19 @@ function provisioning_start() {
     provisioning_get_models \
         "${WORKSPACE}/ComfyUI/custom_nodes/ComfyUI-InstantID/models/antelopev2" \
         "${ANTELOPE_MODELS[@]}"
-	
-     printf "Downloading InstantID models ...\n" "${repo}"
-     provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/config.json" "${WORKSPACE}/ComfyUI/models/checkpoints/controlnet/"
-     provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/diffusion_pytorch_model.safetensors" "${WORKSPACE}/ComfyUI/models/checkpoints/controlnet/"
-     provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ip-adapter.bin" "${WORKSPACE}/ComfyUI/models/checkpoints/"
-     
-     printf "Downloading clip models ...\n" "${repo}"
-     provisioning_download "https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors" "${WORKSPACE}/ComfyUI/models/clip_vision"
+    
+    printf "Downloading InstantID models ...\n" "${repo}"
+    provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/config.json" "${WORKSPACE}/ComfyUI/models/checkpoints/controlnet/"
+    provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/diffusion_pytorch_model.safetensors" "${WORKSPACE}/ComfyUI/models/checkpoints/controlnet/"
+    provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ip-adapter.bin" "${WORKSPACE}/ComfyUI/models/checkpoints/"
+    
+    printf "Downloading clip models ...\n" "${repo}"
+    provisioning_download "https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors" "${WORKSPACE}/ComfyUI/models/clip_vision"
 
-     printf "Downloading LeoSams' Helloworld CLIP models ...\n" "${repo}"
-     provisioning_download "https://huggingface.co/misri/leosamsHelloworldXL_helloworldXL70/resolve/main/text_encoder/model.fp16.safetensors" "${WORKSPACE}/ComfyUI/models/clip" "leosamsHelloworldXL_helloworldXL70-CLIP-L_fp16.safetensors"
-     provisioning_download "https://huggingface.co/misri/leosamsHelloworldXL_helloworldXL70/resolve/main/text_encoder_2/model.fp16.safetensors" "${WORKSPACE}/ComfyUI/models/clip" "leosamsHelloworldXL_helloworldXL70-CLIP-G_fp16.safetensors"
-     provisioning_print_end
+    printf "Downloading LeoSams' Helloworld CLIP models ...\n" "${repo}"
+    provisioning_download "https://huggingface.co/misri/leosamsHelloworldXL_helloworldXL70/resolve/main/text_encoder/model.fp16.safetensors" "${WORKSPACE}/ComfyUI/models/clip" "leosamsHelloworldXL_helloworldXL70-CLIP-L_fp16.safetensors"
+    provisioning_download "https://huggingface.co/misri/leosamsHelloworldXL_helloworldXL70/resolve/main/text_encoder_2/model.fp16.safetensors" "${WORKSPACE}/ComfyUI/models/clip" "leosamsHelloworldXL_helloworldXL70-CLIP-G_fp16.safetensors"
+    provisioning_print_end
 }
 
 function provisioning_get_nodes() {
@@ -150,7 +139,12 @@ function provisioning_get_nodes() {
             fi
         fi
     done
-    micromamba -m pip install evalidate spandrel ultralytics numba deepdiff Ninja
+}
+
+function provisioning_install_python_packages() {
+    if [ ${#PYTHON_PACKAGES[@]} -gt 0 ]; then
+        micromamba -n comfyui run ${PIP_INSTALL} ${PYTHON_PACKAGES[*]}
+    fi
 }
 
 function provisioning_get_models() {
@@ -184,8 +178,7 @@ function provisioning_print_end() {
     printf "\nProvisioning complete:  Web UI will start now\n\n"
 }
 
-# Download from $1 URL to $2 file path
-# Download from $1 URL to $2 directory, optionally use $3 as the filename
+# Download from $1 URL to $2 file path, optionally use $3 as the filename
 function provisioning_download() {
     url=$1
     directory=$2
