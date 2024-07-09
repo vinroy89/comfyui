@@ -76,6 +76,19 @@ ANTELOPE_MODELS=(
 )
 
 ### DO NOT EDIT BELOW HERE UNLESS YOU KNOW WHAT YOU ARE DOING ###
+function provision_cuda() {
+    # Check if CUDA is already installed by looking for nvcc
+    if ! type nvcc > /dev/null 2>&1; then
+      echo "CUDA not found. Installing CUDA..."
+      sudo apt update
+      # Install CUDA
+      # Note: You may need to adjust the package name for different CUDA versions
+      sudo apt install -y cuda-toolkit
+    else
+      echo "CUDA is already installed."
+    fi
+}
+
 
 function provisioning_start() {
     DISK_GB_AVAILABLE=$(($(df --output=avail -m "${WORKSPACE}" | tail -n1) / 1000))
