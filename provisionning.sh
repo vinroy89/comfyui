@@ -4,6 +4,27 @@
 
 # https://raw.githubusercontent.com/ai-dock/comfyui/main/config/provisioning/default.sh
 
+# Check if the cuda-toolkit package is already installed
+if ! dpkg -l | grep -qw cuda-toolkit; then
+  echo "CUDA Toolkit not found. Installing CUDA Toolkit..."
+  apt update
+  apt install cuda-toolkit -y
+else
+  echo "CUDA Toolkit is already installed."
+fi
+
+
+# Check if CUDA is already installed by looking for nvcc
+if ! type nvcc > /dev/null 2>&1; then
+  echo "CUDA not found. Installing CUDA..."
+  sudo apt update && sudo apt upgrade -y
+  # Install CUDA
+  # Note: You may need to adjust the package name for different CUDA versions
+  sudo apt install -y cuda-toolkit
+else
+  echo "CUDA is already installed."
+fi
+
 # Packages are installed after nodes so we can fix them...
 
 PYTHON_PACKAGES=(
@@ -75,26 +96,12 @@ ANTELOPE_MODELS=(
 )
 
 ### DO NOT EDIT BELOW HERE UNLESS YOU KNOW WHAT YOU ARE DOING ###
-function provision_cuda() {
-    # Check if CUDA is already installed by looking for nvcc
-    if ! type nvcc > /dev/null 2>&1; then
-      echo "CUDA not found. Installing CUDA..."
-      sudo apt update
-      # Install CUDA
-      # Note: You may need to adjust the package name for different CUDA versions
-      sudo apt install -y cuda-toolkit
-    else
-      echo "CUDA is already installed."
-    fi
-}
-
 
 function provisioning_start() {
     DISK_GB_AVAILABLE=$(($(df --output=avail -m "${WORKSPACE}" | tail -n1) / 1000))
     DISK_GB_USED=$(($(df --output=used -m "${WORKSPACE}" | tail -n1) / 1000))
     DISK_GB_ALLOCATED=$(($DISK_GB_AVAILABLE + $DISK_GB_USED))
     provisioning_print_header
-    provision_cuda
     provisioning_get_nodes
     provisioning_install_python_packages
     provisioning_get_models \
