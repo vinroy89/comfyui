@@ -35,6 +35,7 @@ PYTHON_PACKAGES=(
     "deepdiff" 
     "Ninja"
     "omegaconf"
+    "google-generativeai==0.7.2"
 )
 
 NODES=(
