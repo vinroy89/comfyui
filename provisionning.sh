@@ -95,6 +95,7 @@ function provisioning_start() {
     DISK_GB_USED=$(($(df --output=used -m "${WORKSPACE}" | tail -n1) / 1000))
     DISK_GB_ALLOCATED=$(($DISK_GB_AVAILABLE + $DISK_GB_USED))
     provisioning_print_header
+    provision_cuda
     provisioning_get_nodes
     provisioning_install_python_packages
     provisioning_get_models \
