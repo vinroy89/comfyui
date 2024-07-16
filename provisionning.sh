@@ -135,6 +135,12 @@ function provisioning_start() {
     printf "Downloading clip models ...\n" "${repo}"
     provisioning_download "https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors" "${WORKSPACE}/ComfyUI/models/clip_vision"
 
+    printf "Downloading Xinsir models ...\n" "${repo}"
+    provisioning_download "https://huggingface.co/xinsir/controlnet-canny-sdxl-1.0/resolve/main/diffusion_pytorch_model_V2.safetensors" "${WORKSPACE}/ComfyUI/models/controlnet" "xinsir-controlnet-canny-sdxl-1.0.safetensors"
+    provisioning_download "https://huggingface.co/xinsir/controlnet-tile-sdxl-1.0/resolve/main/diffusion_pytorch_model.safetensors" "${WORKSPACE}/ComfyUI/models/controlnet" "xinsir-controlnet-tile-sdxl-1.0.safetensors"
+    provisioning_download "https://huggingface.co/xinsir/controlnet-depth-sdxl-1.0/resolve/main/diffusion_pytorch_model.safetensors" "${WORKSPACE}/ComfyUI/models/controlnet" "xinsir-controlnet-depth-sdxl-1.0.safetensors"
+    provisioning_download "https://huggingface.co/xinsir/controlnet-openpose-sdxl-1.0/resolve/main/diffusion_pytorch_model_twins.safetensors" "${WORKSPACE}/ComfyUI/models/controlnet" "xinsir-controlnet-openpose-twins-sdxl-1.0.safetensors"
+    
     printf "Downloading LeoSams' Helloworld CLIP models ...\n" "${repo}"
     provisioning_download "https://huggingface.co/misri/leosamsHelloworldXL_helloworldXL70/resolve/main/text_encoder/model.fp16.safetensors" "${WORKSPACE}/ComfyUI/models/clip" "leosamsHelloworldXL_helloworldXL70-CLIP-L_fp16.safetensors"
     provisioning_download "https://huggingface.co/misri/leosamsHelloworldXL_helloworldXL70/resolve/main/text_encoder_2/model.fp16.safetensors" "${WORKSPACE}/ComfyUI/models/clip" "leosamsHelloworldXL_helloworldXL70-CLIP-G_fp16.safetensors"
