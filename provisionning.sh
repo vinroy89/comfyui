@@ -130,9 +130,9 @@ function provisioning_start() {
         "${ANTELOPE_MODELS[@]}"
     
     printf "Downloading InstantID models ...\n" "${repo}"
-    provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/config.json" "${WORKSPACE}/ComfyUI/models/checkpoints/controlnet/"
-    provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/diffusion_pytorch_model.safetensors" "${WORKSPACE}/ComfyUI/models/checkpoints/controlnet/"
-    provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ip-adapter.bin" "${WORKSPACE}/ComfyUI/models/checkpoints/"
+    provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/config.json" "${WORKSPACE}/ComfyUI/models/controlnet/instantid/"
+    provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/diffusion_pytorch_model.safetensors" "${WORKSPACE}/ComfyUI/models/controlnet/instantid/"
+    provisioning_download "https://huggingface.co/InstantX/InstantID/resolve/main/ip-adapter.bin" "${WORKSPACE}/ComfyUI/models/controlnet/"
     
     printf "Downloading clip models ...\n" "${repo}"
     provisioning_download "https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors" "${WORKSPACE}/ComfyUI/models/clip_vision"
