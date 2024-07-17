@@ -59,7 +59,7 @@ NODES=(
 )
 
 CHECKPOINT_MODELS=(
-    "https://huggingface.co/misri/leosamsHelloworldXL_helloworldXL70/resolve/main/leosamsHelloworldXL_helloworldXL70.safetensors"
+    "https://huggingface.co/KamCastle/sdxlmodels/resolve/main/wildcardxXLLIGHTNING_wildcardxXL.safetensors"
     "https://huggingface.co/camenduru/SUPIR/resolve/main/SUPIR-v0F.ckpt"
     "https://huggingface.co/camenduru/SUPIR/resolve/main/SUPIR-v0Q.ckpt"
 )
