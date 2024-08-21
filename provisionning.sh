@@ -82,10 +82,7 @@ ESRGAN_MODELS=(
     "https://huggingface.co/gemasai/4x_NMKD-Siax_200k/resolve/main/4x_NMKD-Siax_200k.pth"
 )
 
-CONTROLNET_MODELS=(
-  "https://huggingface.co/xinsir/controlnet-tile-sdxl-1.0/resolve/main/diffusion_pytorch_model.safetensors|xinsir-controlnet-tile-sdxl-1.0.safetensors"
-  "https://huggingface.co/xinsir/controlnet-canny-sdxl-1.0/resolve/main/diffusion_pytorch_model_V2.safetensors|xinsir-controlnet-canny-sdxl-1.0.safetensors"
-)
+CONTROLNET_MODELS=()
 
 IPADAPTER_MODELS=(
     "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid_sdxl.bin"
@@ -215,12 +212,9 @@ function provisioning_get_models() {
     fi
     
     printf "Downloading %s model(s) to %s...\n" "${#arr[@]}" "$dir"
-    for item in "${arr[@]}"; do
-        # Split the URL and the filename
-        IFS="|" read -r url filename <<< "$item"
-        
+    for url in "${arr[@]}"; do
         printf "Downloading: %s\n" "${url}"
-        provisioning_download "${url}" "${dir}" "${filename}"
+        provisioning_download "${url}" "${dir}"
         printf "\n"
     done
 }
